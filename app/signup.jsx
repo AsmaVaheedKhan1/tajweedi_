@@ -1,6 +1,6 @@
 // src/screens/RegisterScreen.js
 import { router } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -11,6 +11,65 @@ import {
 } from "react-native";
 
 const RegisterScreen = ({ navigation }) => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [errors, setErrors] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const validateFields = () => {
+    let valid = true;
+    let newErrors = { username: "", email: "", password: "" };
+
+    // Validate Username
+    if (!username) {
+      newErrors.username = "Please enter your username";
+      valid = false;
+    }
+
+    // Validate Email
+    if (!email) {
+      newErrors.email = "Please enter your email";
+      valid = false;
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Please enter a valid email";
+      valid = false;
+    }
+
+    // Validate Password
+    if (!password) {
+      newErrors.password = "Please enter your password";
+      valid = false;
+    } else {
+      if (!/[A-Z]/.test(password)) {
+        newErrors.password = "Password must contain at least 1 uppercase letter";
+        valid = false;
+      } else if (!/[a-z]/.test(password)) {
+        newErrors.password = "Password must contain at least 1 lowercase letter";
+        valid = false;
+      } else if (!/[0-9]/.test(password)) {
+        newErrors.password = "Password must contain at least 1 number";
+        valid = false;
+      } else if (password.length < 6) {
+        newErrors.password = "Password must be at least 6 characters long";
+        valid = false;
+      }
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleSubmit = () => {
+    if (validateFields()) {
+      router.replace("/(drawer)");
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Image source={require("@/assets/images/logo.png")} style={styles.logo} />
@@ -18,11 +77,23 @@ const RegisterScreen = ({ navigation }) => {
 
       {/* Username Field */}
       <Text style={styles.label}>Username</Text>
-      <TextInput style={styles.input} placeholder="Enter your username" />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your username"
+        value={username}
+        onChangeText={setUsername}
+      />
+      {errors.username ? <Text style={styles.errorText}>{errors.username}</Text> : null}
 
       {/* Email Field */}
       <Text style={styles.label}>Email</Text>
-      <TextInput style={styles.input} placeholder="Enter your email" />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter your email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
 
       {/* Password Field */}
       <Text style={styles.label}>Password</Text>
@@ -30,14 +101,15 @@ const RegisterScreen = ({ navigation }) => {
         style={styles.input}
         placeholder="Enter your password"
         secureTextEntry
+        value={password}
+        onChangeText={setPassword}
       />
+      {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
 
       {/* Create Account Button */}
       <TouchableOpacity
         style={styles.button}
-        onPress={() => {
-          router.replace("/(drawer)");
-        }}
+        onPress={handleSubmit}
       >
         <Text style={styles.buttonText}>Create Account</Text>
       </TouchableOpacity>
@@ -76,7 +148,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     paddingHorizontal: 10,
-    marginBottom: 15,
+    marginBottom: 5,
   },
   button: {
     width: "80%",
@@ -91,6 +163,12 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
+  },
+  errorText: {
+    color: "red",
+    fontSize: 12,
+    marginLeft: "10%",
+    marginBottom: 10,
   },
 });
 

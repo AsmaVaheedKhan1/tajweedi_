@@ -10,8 +10,8 @@ import { useRouter } from "expo-router";
 import CustomHeader from "../../components/CustomHeader";
 
 const surahs = [
-  { id: 114, name: "Surah An-Nas" },
-  { id: 109, name: "Surah Al-Kafirun" },
+  { id: 114, name: "Surah Al-Nas" },
+  { id: 109, name: "Surah Al-Kafiroon" },
 ];
 
 export default function HomeScreen() {

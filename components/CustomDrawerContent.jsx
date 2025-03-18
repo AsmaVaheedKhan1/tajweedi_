@@ -33,12 +33,12 @@ const CustomDrawerContent = (props) => {
         }}
       >
         <Image
-          source={require("@/assets/images/dummy.png")}
-          resizeMode="contain"
-          style={{ width: 80, height: 80, resizeMode: "contain" }}
-        />
+  source={require("@/assets/images/dummy.png")}
+  resizeMode="contain"
+  style={{ width: 80, height: 80, borderRadius: 40, resizeMode: "cover" }}
+/>
 
-        <Text style={styles.userName}>User</Text>
+        <Text style={styles.userName}>Ahmed Alshugairi</Text>
       </View>
 
       <TouchableOpacity
