@@ -11,3 +11,4 @@ To make Adroid Studeo Get Started
    ```bash
     npx expo start
    ```
+3. backend script is in backend folder. integration baaki
