@@ -11,3 +11,4 @@ To make Adroid Studeo Get Started
    ```bash
     npx expo start
    ```
+3. BACKEND FILES IN ANOTHER FOLDER. INTEGRATION REMAINS
